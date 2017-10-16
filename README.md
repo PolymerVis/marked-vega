@@ -18,7 +18,7 @@ marked-vega
 ```html
 <marked-element>
   <marked-vega slot="markdown-html"></marked-vega>
-  <script type="text/markdown" src="demo/demo.md"></script>
+  <script type="text/markdown" src="https://rawgit.com/PolymerVis/marked-vega/master/demo/readme.md"></script>
 </marked-element>
 ```
 
