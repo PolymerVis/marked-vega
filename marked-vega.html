@@ -1,0 +1,211 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../vega-element/vega.html">
+<link rel="import" href="../vega-element/vega-lite.html">
+<link rel="import" href="../vega-element/vega-tooltip.html">
+<link rel="import" href="../vega-element/vega-element.html">
+
+<!--
+`marked-vega` is an add-on element for
+[`marked-element`](https://www.webcomponents.org/element/PolymerElements/marked-element)
+to render [Vega](https://vega.github.io/vega) and
+[Vega-Lite](https://vega.github.io/vega-lite) charts in markdown documents.
+More API documentation and demos can be found on
+[the web components page for `marked-vega`](https://www.webcomponents.org/element/PolymerVis/marked-vega).
+
+## Disclaimer
+PolymerVis is a personal project and is NOT in any way affliated with Vega,
+Vega-Lite, Polymer or Google.
+
+## Installation
+```
+bower install --save PolymerVis/marked-vega
+```
+
+## Markdown Syntax
+`marked-vega` introduces a few new markdown syntax.
+
+### Image markdown
+~~~~
+![vg|vega|vega-lite|vl](https://someurl/spec.json)
+~~~~
+**Example**
+~~~~
+![vega](barchart-vg.json)
+~~~~
+
+### Code markdown
+~~~~
+```vg|vega|vega-lite|vl
+<Vega/Vega-Lite JSON specification>
+or
+<Vega/Vega-Lite JSON specification in YAML format>
+```
+~~~~
+**Example - JSON specification**
+~~~~
+```vega-lite
+{
+  "data": {
+    "values": [
+      {"a": "A","b": 28}, {"a": "B","b": 55}, {"a": "C","b": 43},
+      {"a": "D","b": 91}, {"a": "E","b": 81}, {"a": "F","b": 53},
+      {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "a", "type": "ordinal"},
+    "y": {"field": "b", "type": "quantitative"}
+  }
+}
+```
+~~~~
+
+**Example - YAML specification**
+~~~~
+```vega-lite
+data:
+  values:
+    - x: A
+      y: 13
+    - x: B
+      y: 55
+    - x: C
+      y: 43
+    - x: D
+      y: 91
+    - x: E
+      y: 81
+    - x: F
+      y: 53
+    - x: G
+      y: 19
+    - x: H
+      y: 87
+    - x: I
+      y: 52
+mark:
+  bar
+encoding:
+  x:
+    field: x
+    type: ordinal
+  y:
+    field: y
+    type: quantitative
+```
+~~~~
+
+## Basic usage
+`marked-vega` enable parsing and rendering of Vega/Vega-Lite charts by updating
+the `renderer` attribute of the parent `marked-element` and adding a few new
+rules to the [`marked`](https://github.com/chjj/marked) markdown parser and
+compiler.
+
+The easiest way to use `marked-vega` is to replace it as the default slot element
+when using `marked-element`.
+
+**Before**
+```html
+<marked-element>
+  <div slot="markdown-html"></div>
+  <script type="text/markdown" src="../guidelines.md"></script>
+</marked-element>
+```
+**After**
+```html
+<marked-element>
+  <marked-vega slot="markdown-html"></marked-vega>
+  <script type="text/markdown" src="demo/demo.md"></script>
+</marked-element>
+```
+
+Please look at the
+[the webcomponents page for `marked-element`](https://www.webcomponents.org/element/PolymerElements/marked-element)
+for other ways of using `marked-element`.
+
+## Custom renderer
+Alternatively if you wish to use to further customize the `renderer` for
+`marked-element`, you can used the provided `renderers`:
+- `PolymerVis.marked.CodeRendererVega` modifies the rules for the `code` markdown
+- `PolymerVis.marked.ImageRendererVega` modifies the rules for the `image` markdown
+- `PolymerVis.marked.RendererVega` modifies the rules for the `code` and `image` markdown
+
+Each `renderer` is a function of the form `function(renderer) { ... return renderer; }`.
+
+**Example**
+```javascript
+this.customRenderer = function(renderer) {
+  // other customized renderer codes
+  ...
+  // return vega renderer codes
+  return PolymerVis.marked.RendererVega(renderer);
+};
+```
+```html
+<marked-element renderer="[[customRenderer]]">
+  <marked-vega slot="markdown-html"></marked-vega>
+  <script type="text/markdown" src="demo/demo.md"></script>
+</marked-element>
+```
+
+@customElement
+@polymer
+@demo demo/index.html Basic demo
+@demo demo/complex.html Inking and brushing demo
+
+-->
+<dom-module id="marked-vega">
+<script type="text/javascript" src="../yamljs/bin/yaml.js"></script>
+<script type="text/javascript" src="marked-vega.js"></script>
+<script>
+class MarkedVega extends Polymer.Element {
+  static get is() {
+    return 'marked-vega';
+  }
+
+  static get properties() {
+    return {
+      /**
+       * slot attribute for `marked-element`
+       * @type {String}
+       */
+      slot: {
+        type: String,
+        value: 'markdown-html',
+        readOnly: true,
+        reflectToAttribute: true
+      },
+      /**
+       * Function used to customize the renderer to parse and render Vega and
+       * Vega-Lite charts. It takes one argument: a marked renderer object,
+       * which is mutated by the function.
+       * @type {Function}
+       */
+      renderer: {
+        type: Function,
+        value: PolymerVis.marked.RendererVega,
+        notify: true
+      }
+    };
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    var markedElement = this.parentNode;
+    if (!markedElement || markedElement.nodeName !== 'MARKED-ELEMENT') return;
+    var originalRenderer = markedElement.renderer;
+    if (
+      originalRenderer &&
+      originalRenderer !== PolymerVis.marked.RendererVega
+    ) {
+      markedElement.renderer = renderer =>
+        renderer && originalRenderer(PolymerVis.marked.RendererVega(renderer));
+    } else {
+      markedElement.renderer = PolymerVis.marked.RendererVega;
+    }
+  }
+}
+window.customElements.define(MarkedVega.is, MarkedVega);
+</script>
+</dom-module>

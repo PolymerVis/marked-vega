@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>marked-vega demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../marked-element/marked-element.html">
+    <link rel="import" href="../marked-vega.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+<div class="vertical-section-container centered">
+<h3>Basic marked-vega demo</h3>
+<demo-snippet>
+  <template>
+    <marked-element>
+      <marked-vega slot="markdown-html"></marked-vega>
+      <script type="text/markdown" src="./demo.md"></script>
+    </marked-element>
+  </template>
+</demo-snippet>
+</div>
+</body>
+</html>
