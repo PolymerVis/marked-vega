@@ -1,24 +1,24 @@
 #### 1. Render markdown with Vega-Lite charts with `image` markdown
 ~~~
-![vega-lite](http://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vl.json)
+![vega-lite](https://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vl.json)
 
 or
 
-![vl](http://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vl.json)
+![vl](https://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vl.json)
 ~~~
 will renders as:
-![vega-lite](http://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vl.json)
+![vega-lite](https://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vl.json)
 
 #### 2. Render markdown with Vega charts with `image` markdown
 ~~~
-![vega](http://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vg.json)
+![vega](https://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vg.json)
 
 or
 
-![vg](http://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vg.json)
+![vg](https://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vg.json)
 ~~~
 will renders as:
-![vg](barchart-vg.json)
+![vg](https://rawgit.com/PolymerVis/marked-vega/master/demo/barchart-vg.json)
 
 
 #### 3. Render markdown with Vega/Vega-Lite charts with codeblock
