@@ -1,7 +1,7 @@
 marked-vega
 [![GitHub release](https://img.shields.io/github/release/PolymerVis/marked-vega.svg)](https://github.com/PolymerVis/marked-vega/releases)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/PolymerVis/marked-vega)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![Greenkeeper badge](https://badges.greenkeeper.io/PolymerVis/marked-vega.svg)](https://greenkeeper.io/)
 ==========
 
 <!---
